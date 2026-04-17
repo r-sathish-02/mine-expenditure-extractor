@@ -1,0 +1,59 @@
+# ─────────────────────────────────────────────────────────────
+# Pre-commit hooks for the mine-expenditure-extractor project.
+#
+# First-time setup:
+#     pip install pre-commit
+#     pre-commit install
+#
+# Run against the whole repo:
+#     pre-commit run --all-files
+#
+# Hooks run automatically on every `git commit`. Failed checks abort
+# the commit; most fixable issues (trailing whitespace, import order,
+# formatting) are auto-corrected — just `git add` the fixed files
+# and commit again.
+# ─────────────────────────────────────────────────────────────
+
+default_language_version:
+  python: python3
+
+repos:
+  # --------------------------------------------------------------
+  # Baseline hygiene — tiny, fast, zero-config.
+  # --------------------------------------------------------------
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+      - id: check-json
+      - id: check-added-large-files
+        args: ["--maxkb=2048"]   # block >2 MB files (e.g. stray PDFs)
+      - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: debug-statements       # catches stray `import pdb; pdb.set_trace()`
+      - id: mixed-line-ending
+        args: ["--fix=lf"]
+      - id: detect-private-key     # refuse to commit SSH / TLS keys
+
+  # --------------------------------------------------------------
+  # Ruff — ultra-fast linter + formatter. Replaces flake8 + isort
+  # + pyupgrade + black in one tool.
+  # --------------------------------------------------------------
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.9
+    hooks:
+      - id: ruff
+        args: ["--fix", "--exit-non-zero-on-fix"]
+      - id: ruff-format
+
+  # --------------------------------------------------------------
+  # Secret scanner — stops a committed .env slipping through even
+  # if .gitignore is edited.
+  # --------------------------------------------------------------
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.4
+    hooks:
+      - id: gitleaks

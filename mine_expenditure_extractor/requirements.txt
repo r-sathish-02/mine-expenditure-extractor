@@ -1,0 +1,22 @@
+# Core parsing
+PyMuPDF>=1.24.0
+pdfplumber>=0.11.0
+
+# Chunking (LangChain's splitter, standalone package)
+langchain-text-splitters>=0.2.0
+
+# Embeddings + rerank
+sentence-transformers>=2.7.0
+torch>=2.2.0
+
+# Vector store
+chromadb>=0.5.0
+
+# LLM client (Groq uses the OpenAI-compatible schema)
+openai>=1.30.0
+
+# Structured outputs
+pydantic>=2.6.0
+
+# Config
+python-dotenv>=1.0.0

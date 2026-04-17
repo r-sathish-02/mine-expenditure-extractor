@@ -1,0 +1,80 @@
+# ───────────────── Environments ─────────────────
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+env/
+ENV/
+
+# ───────────────── Python ─────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Distribution / packaging
+build/
+dist/
+*.egg
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# Unit test / coverage
+.tox/
+.coverage
+.coverage.*
+.cache
+.pytest_cache/
+htmlcov/
+coverage.xml
+*.cover
+.hypothesis/
+.nox/
+
+# Type checkers
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/
+.ruff_cache/
+
+# ───────────────── Project-specific artefacts ─────────────────
+# Parsed-page cache (regenerable from the PDFs)
+cache/
+!cache/.gitkeep
+
+# Vector store (regenerable)
+vector_index/
+
+# Logs
+logs/
+*.log
+
+# Input PDFs — you probably don't want to commit raw reports
+pdfs/*.pdf
+pdfs/*.PDF
+!pdfs/.gitkeep
+
+# Extraction outputs are kept by default; uncomment to ignore them.
+# outputs/*.json
+# outputs/*.md
+# !outputs/.gitkeep
+
+# ───────────────── IDEs / editors ─────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ───────────────── OS ─────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ───────────────── Pre-commit ─────────────────
+# Pre-commit config stays under VCS, but the local env is ignored.
+.pre-commit-cache/

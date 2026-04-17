@@ -1,0 +1,81 @@
+[project]
+name = "mine-expenditure-extractor"
+version = "0.1.0"
+description = "RAG pipeline that extracts capital and operating cost breakdowns from mining technical reports."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+
+# Runtime dependencies — keep in sync with requirements.txt.
+dependencies = [
+    "PyMuPDF>=1.24.0",
+    "pdfplumber>=0.11.0",
+    "langchain-text-splitters>=0.2.0",
+    "sentence-transformers>=2.7.0",
+    "torch>=2.2.0",
+    "chromadb>=0.5.0",
+    "openai>=1.30.0",
+    "pydantic>=2.6.0",
+    "python-dotenv>=1.0.0",
+]
+
+[project.optional-dependencies]
+# Install with:  pip install -e ".[dev]"
+dev = [
+    "pre-commit>=3.7.0",
+    "ruff>=0.6.9",
+    "pytest>=8.0",
+]
+
+[project.scripts]
+mine-extractor = "run:main"
+
+# ─────────────────────────────────────────────────────────────
+# Ruff — linter + formatter
+# ─────────────────────────────────────────────────────────────
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+extend-exclude = [
+    "cache",
+    "vector_index",
+    "logs",
+    "outputs",
+    "pdfs",
+    ".venv",
+]
+
+[tool.ruff.lint]
+# A pragmatic default rule set. Feel free to add more from the full
+# list at https://docs.astral.sh/ruff/rules/
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort
+    "B",    # flake8-bugbear (likely bugs)
+    "UP",   # pyupgrade (modern syntax)
+    "SIM",  # flake8-simplify
+    "C4",   # flake8-comprehensions
+    "RUF",  # Ruff-specific
+]
+ignore = [
+    "E501",  # line-too-long — handled by the formatter
+    "B008",  # function-call-as-default — common in pydantic/dataclass fields
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]     # re-exports are fine in package __init__.py
+"mine_extractor/extraction/prompts.py" = ["E501"]  # prompt text is long by nature
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+
+# ─────────────────────────────────────────────────────────────
+# pytest (for when you add tests)
+# ─────────────────────────────────────────────────────────────
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
